@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  
+  div.home
+    h1(style="font-size:100px")=title
+    p Welcome to Our Company
+
+  div.content
+    div.container
+      h2.text-center Inventory
+      div.row
+        div.col.card
+          h4 Companies        
+          a.btn.btn-primary(href="/companies") View          
+        div.col.card
+          h4 Users          
+          a.btn.btn-danger(href="/users") View
+      br    
+      div.row    
+        div.col.card
+          h4 Users Working Days  
+          a.btn.btn-info(href="/usersworkingdays") View
+        div.col.card
+          h4 Working Days
+          a.btn.btn-warning(href="/workingdays") View
+        
+

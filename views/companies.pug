@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    div.company
+        h1.text-center Companies Section
+    div.container
+        div.row
+            div.col
+                h2 Here is list of companies registered.
+                if companies
+                    for company in companies
+                        ul
+                            li=company.name
+                else
+                    p No companies are registered    
+            div.col
+                h3 Register a Company
+                form(method='POST', style="border:2px solid gray;padding:10px" action='/user/add_company')      
+                    #form-group
+                        label Name:
+                        input.form-control(name='name',type='text')        
+                    br
+                    input.btn.btn-primary(type='submit',value='Submit')

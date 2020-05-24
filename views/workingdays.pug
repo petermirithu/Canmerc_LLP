@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    div.workingdays
+        h1.text-center Working Days Section
+    div.container
+        div.row
+            div.col
+                h2 Here is list of working days.
+                if workingdays
+                    for day in workingdays
+                        ul
+                            li=day.weekDay
+                            p=day.workingDate    
+                            p=day.isWorking
+                else
+                    p No working days are registered    
+            div.col
+                h3 Add Working Days
+                form(method='POST', style="border:2px solid gray;padding:10px" action='/user/add_workingdays')      
+                    #form-group
+                        label Week Day:
+                        input.form-control(name='weekDay',type='text')        
+                    #form-group
+                        label Working Date:
+                        input.form-control(name='workingDate',type='date')   
+                    #form-group
+                        label Is Working:
+                        input.form-control(name='isWorking',type='checkbox')         
+                    br
+                    input.btn.btn-warning(type='submit',value='Submit')  

@@ -1,0 +1,29 @@
+extends layout
+
+block content
+    div.userWd
+        h1.text-center Users Working Days Section
+    div.container
+        div.row
+            div.col
+                h2 Here is list of users working days.
+                if userWdays
+                    for user in userWdays
+                        ul
+                            li=user.userId
+                                span=' '
+                                span User Id
+                            li=user.WorkingDay.weekDay
+                else
+                    p No Users working days.
+            div.col
+                h3 Add Users Working Days
+                form(method='POST', style="border:2px solid gray;padding:10px" action='/user/add_userworkingdays')      
+                    #form-group
+                        label User Id:
+                        input.form-control(name='userId',type='number')        
+                    #form-group
+                        label Working Day Id:
+                        input.form-control(name='workingDayId',type='number')              
+                    br
+                    input.btn.btn-info(type='submit',value='Submit')  
