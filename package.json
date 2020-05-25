@@ -1,9 +1,9 @@
 {
-  "name": "todo_app",
+  "name": "canmercllp",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "nodejs ./bin/www"
+    "start": "node app.js"
   },
   "dependencies": {
     "body-parser": "~1.0.0",
@@ -22,5 +22,9 @@
     "pug": "^2.0.4",
     "sequelize": "^5.21.10",
     "static-favicon": "~1.0.0"
+  },
+  "engines": {    
+    "node": "0.8.x",
+    "npm": "1.1.x"
   }
 }

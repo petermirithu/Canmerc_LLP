@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var session = require('cookie-session');
+var db = require('./models/index');
+var http    = require('http')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -72,5 +74,12 @@ app.use(function(err, req, res, next) {
     });
 });
 
+app.set('port', process.env.PORT || 3000);
+
+db.sequelize.sync().then(function() {
+    http.createServer(app).listen(app.get('port'), function(){
+      console.log('Express server listening on port ' + app.get('port'));
+    });
+});
 
 module.exports = app;
