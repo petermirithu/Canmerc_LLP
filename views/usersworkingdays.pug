@@ -10,10 +10,12 @@ block content
                 if userWdays
                     for user in userWdays
                         ul
-                            li=user.userId
+                            li Employee:
                                 span=' '
-                                span User Id
-                            li=user.WorkingDay.weekDay
+                                span=user.User.firstName                                                           
+                                p Working Days:
+                                    span=' '
+                                    span=user.WorkingDay.weekDay
                 else
                     p No Users working days.
             div.col

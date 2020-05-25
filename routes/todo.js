@@ -3,27 +3,6 @@ var router = express.Router();
 const Todo = require("../models").Todo;
 const TodoItem = require('../models').TodoItem;
 
-
-/* GET to todo page form. */
-router.get('/all_todos', function(req, res) {    
-    return Todo
-        .findAll()
-        .then(todos => res.status(200).send(todos))
-        .catch(error => res.status(400).send(error));          
-  });
-
-router.get('/all_todoitems',function(req,res){    
-    return Todo
-        .findAll({
-        include: [{
-            model: TodoItem,
-            as: 'todoItems',
-        }],
-        })
-        .then(todos => res.status(200).send(todos))
-        .catch(error => res.status(400).send(error));
-})
-
 router.get("/single",function(req,res){    
     return Todo    
         .findByPk(1, {
@@ -68,25 +47,7 @@ router.put("/update",function(req,res){
         .catch((error) => res.status(400).send(error));
 
 })
-router.post('/add_todo', function(req, res) {                
-    return Todo
-        .create({
-        title: req.body.title,
-        })
-        .then(todo => res.status(201).send(todo))
-        .catch(error => res.status(400).send(error));      
-    
-});  
 
-router.post('/add_todo_item',function(req,res){    
-    return TodoItem
-        .create({
-            content: req.body.content,
-            todoId: req.body.todoId,
-        })
-        .then(todoItem => res.status(201).send(todoItem))
-        .catch(error => res.status(400).send(error));
-});
 
 router.delete("/delete",function(req,res){    
     return Todo

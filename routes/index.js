@@ -20,8 +20,7 @@ router.get('/users',function(req,res){
 
 router.get('/usersworkingdays',function(req,res){
   UsersWorkingDay.findAll({
-    include: {model: User,as: 'User'}, 
-    include: { model: WorkingDays,as: "WorkingDay"}
+    include: [{model: User,as: 'User'},{ model: WorkingDays,as: "WorkingDay"}]
   })
   .then(results => res.render('usersworkingdays', { title: 'Users Working Days',userWdays:results} ))
 })
