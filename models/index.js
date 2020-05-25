@@ -18,9 +18,9 @@ if (!global.hasOwnProperty('db')) {
     sequelize = new Sequelize(process.env.DATABASE_URL, {
       dialect:  'postgres',
       protocol: 'postgres',
-      port:     match[4],
-      host:     match[3],
-      logging:  true //false
+      port:     5000,
+      host:     "heroku host",
+      logging:  true 
     })
   } else {
     // the application is executed on the local machine ... use mysql
