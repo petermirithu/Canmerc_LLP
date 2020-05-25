@@ -150,3 +150,33 @@ nav ul li a:hover{
   color:white
 }      
 
+.notification{
+  padding-top: 10%;
+  position: absolute;
+  padding-left: 40%;
+  text-align: center;
+}
+
+table{
+  width: 100%;
+  border: 2px solid black;
+  box-shadow: 5px 10px #000000;
+}
+table .headings td{
+  padding-left: 5%;
+  padding-bottom: 2%;
+  font-weight: bold;
+}
+table .content td{
+  padding-left: 5%;
+}
+
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+#compchoose{
+  width: 40%;
+}
+
+

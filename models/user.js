@@ -4,7 +4,9 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    companyId: DataTypes.INTEGER
+    password: DataTypes.STRING,
+    companyId: DataTypes.INTEGER,
+    profile_pic: DataTypes.STRING
   }, {});
   User.associate = function(models) {
     User.belongsTo(models.Company,{foreignKey: 'companyId', as: 'Company'})    

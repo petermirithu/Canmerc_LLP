@@ -18,20 +18,21 @@ router.post('/add_company', function(req, res) {
       .catch(error => res.status(400).send(error))                     
 });  
 
-router.post('/add_user', function(req, res) {                
-  return User
-      .create({      
-        email: req.body.email,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        companyId: req.body.companyId,
+router.post('/add_user', async(req, res) => {           
+  try {
+    return User
+      .update(
+        { companyId: req.body.compchoose },
+        { where: { id: req.body.userid  } 
       })
       .then(
-        req.flash('success','New user added'),
-        res.redirect('/users/')
-        )        
-      .catch(error => res.status(400).send(error))                     
-});  
+        req.flash('success','Employee has been updated'),        
+        res.redirect('/users'))
+
+  } catch(error){
+    next(error);
+  }
+})
 
 router.post('/add_userworkingdays', function(req, res) {                
   return UsersWorkingDay
@@ -40,7 +41,7 @@ router.post('/add_userworkingdays', function(req, res) {
         workingDayId: req.body.workingDayId,
       })
       .then(
-        req.flash('success','Created a new user working day'),
+        req.flash('success','Created a new employee working day'),
         res.redirect('/usersworkingdays/')
         )        
       .catch(error => res.status(400).send(error))                     
@@ -59,6 +60,7 @@ router.post('/add_workingdays', function(req, res) {
         )        
       .catch(error => res.status(400).send(error))                     
 });  
+
 
 
 module.exports = router;

@@ -4,33 +4,33 @@ block content
     div.users
         h1.text-center Employees Section
     div.container
-        div.row
-            div.col
-                h2 Here is list of employees registered.
-                if employees
-                    for user in employees
-                        ul
-                            li=user.firstName
-                                span=' '
-                                span=user.lastName
-                            p=user.email
-                            p=user.Company.name
-                else
-                    p No Users are registered    
-            div.col
-                h3 Register am Employee
-                form(method='POST', style="border:2px solid gray;padding:10px" action='/user/add_user')      
-                    #form-group
-                        label Email:
-                        input.form-control(name='email',type='text')        
-                    #form-group
-                        label First Name:
-                        input.form-control(name='firstName',type='text')        
-                    #form-group
-                        label Last Name:
-                        input.form-control(name='lastName',type='text')        
-                    #form-group
-                        label Company Id:
-                        input.form-control(name='companyId',type='number')                        
-                    br
-                    input.btn.btn-danger(type='submit',value='Submit')  
+        hr        
+        table
+            tr.headings
+                td First Name
+                td Last Name            
+                td Email
+                td Company
+
+            if employees
+                for user in employees                    
+                    tr.content
+                        td=user.firstName
+                        td=user.lastName
+                        td=user.email
+                        if user.Company
+                            td=user.Company.name
+                        else
+                            td
+                                form(method="post" action="/user/add_user")  
+                                    #form-group                                                                                              
+                                    select(name="compchoose")#compchoose.custom-select
+                                        option.form-control(value=0) Select an Employee                                                                                                                                      
+                                        for company in companies   
+                                            option.form-control(value=company.id)=company.name                                                                                                                                       
+                                    select(style="visibility:hidden",name="userid")#userid
+                                        option(value=user.id)=user.id                                                                                                                       
+                                    input.btn.btn-danger(type='submit',value='Submit')  
+                                    
+        hr                    
+        

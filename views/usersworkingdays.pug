@@ -6,7 +6,7 @@ block content
     div.container
         div.row
             div.col
-                h2 Here is list of users working days.
+                h2 Here is list of employee working days.
                 if userWdays
                     for user in userWdays
                         ul
@@ -17,15 +17,21 @@ block content
                                     span=' '
                                     span=user.WorkingDay.weekDay
                 else
-                    p No Users working days.
+                    p No Employee working days.
             div.col
-                h3 Add Users Working Days
+                h3 Add Employee Working Days
                 form(method='POST', style="border:2px solid gray;padding:10px" action='/user/add_userworkingdays')      
                     #form-group
-                        label User Id:
-                        input.form-control(name='userId',type='number')        
+                        label Employee:
+                        select(name="userId")#users.custom-select
+                            option.form-control(value=0) Select Employee                                                                                                                                                               
+                            for user in users   
+                                option.form-control(value=user.id)=user.firstName                                                                                                                                                               
                     #form-group
-                        label Working Day Id:
-                        input.form-control(name='workingDayId',type='number')              
+                        label Working Day:
+                        select(name="workingDayId")#workingDayId.custom-select
+                            option.form-control(value=0) Select Working day                                                                                                                                                              
+                            for day in workingdays   
+                                option.form-control(value=day.id)=day.weekDay                        
                     br
                     input.btn.btn-info(type='submit',value='Submit')  

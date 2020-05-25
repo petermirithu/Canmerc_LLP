@@ -41,16 +41,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+    
 app.use('/', routes);
 app.use('/user', users);
 app.use('/auth',auth);
 
-// passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
+
 // passport config
 require('./config/passport')(passport);
-
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

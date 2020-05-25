@@ -16,17 +16,21 @@ html
           li
             a(href="#") About
 
-          if username  
+          if username
             li
-              a(href="#") Logout
+              a(href="/auth/logout") Logout
+            li
+              a(href="#")=username.firstName+"'s Profile"
+              
           else    
             li
               a(href="/auth/signin") Sign In      
-    if successes
-        for success in successes
-            div.alert.alert-success #{ success }
-    if errors
-        for error, i in errors
-            div.alert.alert-danger #{ error }
-                                                
+
+    div.notification                                                 
+      if successes
+          for success in successes
+              div.alert.alert-success #{ success }
+      if errors
+          for error, i in errors
+              div.alert.alert-danger #{ error }
     block content

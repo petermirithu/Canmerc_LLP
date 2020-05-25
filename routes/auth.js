@@ -1,7 +1,18 @@
 var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcryptjs');
-const passport = require('passport')
+const passport = require('passport');
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './app/uploads')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  }
+})
+
 
 // bring in user model
 const User = require("../models").User;
@@ -14,7 +25,8 @@ router.get('/signup',function(req,res){
 router.get('/signin',function(req,res){
     res.render('signin',{title:'Sign In'})
 })
-  
+
+
 // register users
 router.post('/register',function(req,res){
   const fname = req.body.fname;
@@ -37,35 +49,33 @@ router.post('/register',function(req,res){
       errors:errors
     });    
   }else{
+    
     bcrypt.genSalt(10, function(err,salt){
       bcrypt.hash(password, salt, function(err,hash){
         if(err){
           console.log(err);
-        }
-        passwordHashed= hash
-        return User
-          .create({
-            firstName:fname,
-            lastName:lname,
-            email:email,        
-            password:passwordHashed
-          })
-          .then(
-            req.flash('success','Your now registered and can login.'),
-            res.redirect('/auth/signin')
-            )     
-          .catch(error => res.status(400).send(error))                                           
+        }               
+        const hashedpwd=hash
+        return User.create({ firstName:fname, lastName:lname, email:email, password:hashedpwd}).then(
+          console.log("***************************"),
+          console.log(password),
+          console.log(hashedpwd),
+          console.log(fname),
+          console.log("***************************"),
+          req.flash('success','You are now registered and can log in'),
+          res.redirect('/auth/signin')                                      
+        );                          
       })
-    });    
+    })    
   }
 });
 
 router.post('/login',function(req,res,next){
   passport.authenticate('local', {
     successRedirect:'/',
-    failureRedirect:'/users/login',
+    failureRedirect:'/auth/signin',
     failureFlash:true,
-  })(req,res,next);
+  })(req,res,next);    
 });
 
 router.get('/logout',function(req,res){

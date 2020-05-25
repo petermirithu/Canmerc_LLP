@@ -5,28 +5,51 @@ const User = require("../models").User;
 const UsersWorkingDay = require("../models").UsersWorkingDay;
 const WorkingDays = require("../models").WorkingDays;
 
+function isAuthenticated(req, res, next) {
+  if (req.user){
+    return next();      
+  }
+  else{
+    res.redirect('/auth/signin');
+  }
+}
+
 /* GET home page. */
 router.get('/', function(req, res) {     
-  res.render('index', { title: 'Canmerc LLP'})  
+  var username=null;
+  if (req.user){
+    username=req.user
+  }
+  res.render('index', { title: 'Canmerc LLP',username:username})  
 })
 
-router.get('/companies',function(req,res){
-  Company.findAll().then(results => res.render('companies', { title: 'Companies',companies:results}))
+router.get('/profile',isAuthenticated,function(req,res){
+  res.render('profile',{title:'Profile',username:req.user})
 })
 
-router.get('/users',function(req,res){  
-  User.findAll({include: [{model: Company,as: 'Company',}],}).then(results => res.render('users', { title: 'Employees',employees:results}))
+router.get('/companies',isAuthenticated, function(req,res){
+  Company.findAll().then(results => res.render('companies', { title: 'Companies',companies:results,username:req.user}))
 })
 
-router.get('/usersworkingdays',function(req,res){
-  UsersWorkingDay.findAll({
-    include: [{model: User,as: 'User'},{ model: WorkingDays,as: "WorkingDay"}]
-  })
-  .then(results => res.render('usersworkingdays', { title: 'Users Working Days',userWdays:results} ))
+router.get('/users',isAuthenticated, async(req,res) => {  
+
+  let companies= await Company.findAll()     
+  let users= await User.findAll({include: [{model: Company,as: 'Company',}]})
+
+  res.render('users', { title: 'Employees',employees:users,username:req.user,companies:companies})
 })
 
-router.get('/workingdays',function(req,res){
-  WorkingDays.findAll().then(results => res.render('workingdays', { title: 'Working Days',workingdays:results}))
+
+router.get('/usersworkingdays',isAuthenticated, async(req,res) => {
+  let users= await User.findAll({include: [{model: Company,as: 'Company',}]})
+  let workingdays= await WorkingDays.findAll()
+  let usersworkingdays= await UsersWorkingDay.findAll({include: [{model: User,as: 'User'},{ model: WorkingDays,as: "WorkingDay"}]})
+
+  res.render('usersworkingdays', { title: 'Users Working Days',userWdays:usersworkingdays,users:users,workingdays:workingdays,username:req.user})
+})
+
+router.get('/workingdays',isAuthenticated,function(req,res){
+  WorkingDays.findAll().then(results => res.render('workingdays', { title: 'Working Days',workingdays:results,username:req.user}))
 })
 
 module.exports = router;
