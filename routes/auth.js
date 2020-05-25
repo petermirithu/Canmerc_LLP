@@ -4,15 +4,17 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const multer = require('multer')
 
+
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './app/uploads')
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/images')
   },
-  filename: (req, file, cb) => {
+  filename: function (req, file, cb) {      
     cb(null, file.originalname)
   }
-})
+});
 
+var upload = multer({storage: storage})
 
 // bring in user model
 const User = require("../models").User;
@@ -26,6 +28,41 @@ router.get('/signin',function(req,res){
     res.render('signin',{title:'Sign In'})
 })
 
+router.post('/update/profile/pic', upload.single('photo') , async(req, res) => {    
+  try {
+    return User
+      .update(        
+        { profile_pic: req.file.filename},        
+        { where: { id: parseInt(req.user.id)} 
+      })
+      .then(
+        req.flash('success','Profile pic has been updated'),        
+        res.redirect('/profile'))
+
+  } catch(error){
+      res.status(400).send(error)                  
+  }
+        
+});
+
+// router.post('/update/profile', async(req, res) => {           
+//   try {
+//     return User
+//     .update(
+//       { firstName: req.body.fname},
+//       { lastName: req.body.lname},
+//       { emailName: req.body.email},      
+//       { where: { id: req.body.userid  } 
+//     })
+//     .then(
+//       req.flash('success','Profile has been updated'),        
+//       res.redirect('/profile'))
+
+//   } catch(error){
+//       res.status(400).send(error)                  
+//   }
+// })
+        
 
 // register users
 router.post('/register',function(req,res){

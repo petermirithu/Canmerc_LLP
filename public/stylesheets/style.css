@@ -16,6 +16,14 @@ a {
   text-align: center;
   color: aquamarine;
 }
+.profile{
+  background-image: url('https://images.unsplash.com/photo-1534059908148-9d261b5e1c9e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80');
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;  
+  text-align: center;
+  color: aquamarine;
+}
 .company{
   background-image: url('https://images.unsplash.com/photo-1435575653489-b0873ec954e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80');
   background-position: 50% 50%;
@@ -44,7 +52,7 @@ a {
   background-repeat: no-repeat;
   color: rgb(229, 255, 0);  
 }
-.home h1,.company h1,.users h1,.userWd h1,.workingdays h1{
+.home h1,.company h1,.users h1,.userWd h1,.workingdays h1,.profile h1{
   padding-top: 15%;
 }
 
@@ -180,3 +188,48 @@ table .content td{
 }
 
 
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}

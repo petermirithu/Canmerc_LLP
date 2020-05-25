@@ -23,8 +23,9 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Canmerc LLP',username:username})  
 })
 
-router.get('/profile',isAuthenticated,function(req,res){
-  res.render('profile',{title:'Profile',username:req.user})
+router.get('/profile',isAuthenticated,async function(req,res){
+  let user= await User.findByPk(req.user.id,{include: [{model: Company,as: 'Company',}]})
+  res.render('profile',{title:'Profile',username:req.user,user:user})
 })
 
 router.get('/companies',isAuthenticated, function(req,res){

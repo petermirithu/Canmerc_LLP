@@ -2,5 +2,44 @@ extends layout
 
 block content
   
-  div.profile
-    h4(style="font-size:100px")=username+"'s profile"      
+    div.profile
+        h1=username.firstName+"'s profile"      
+
+    div.container    
+        div.row
+            div.col
+                h3 Your information
+                div.card
+                    h6.card-header="Name: "+user.firstName+" "+user.lastName
+                    div.card-body
+                        if user.profile_pic
+                            img(src='/uploads/images/'+user.profile_pic width="80px" style="border-radius:50%" alt="porfile")                                       
+                        else
+                            img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png' width="80px" style="border-radius:50%" alt="porfile")                                           
+
+                        form(method='POST' enctype="multipart/form-data",  action='/auth/update/profile/pic')      
+                            #form-group
+                                label Change Profile Pic:                        
+                                input.form-control(name='photo',type='file')   
+                            br
+                            input.btn.btn-danger(type='submit',value='Change')                                   
+                        br    
+                        p="Email "+user.email
+                        p="Company: "+user.Company.name
+
+            div.col
+                h3 Update Profile
+                form(method='POST', style="border:2px solid gray;padding:10px" action='#')      
+                    #form-group
+                        label First Name:
+                        input.form-control(name='fname',type='text')        
+                    #form-group
+                        label Last Name:
+                        input.form-control(name='lname',type='text')        
+                    #form-group
+                        label Email:
+                        input.form-control(name='email',type='text')                            
+                    br
+                    input.btn.btn-success(type='submit',style="pointer-events: none;}", value='Update')  
+
+
