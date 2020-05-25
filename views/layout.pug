@@ -21,7 +21,7 @@ html
               a(href="#") Logout
           else    
             li
-              a(href="#") Sign In      
+              a(href="/auth/signin") Sign In      
     if successes
         for success in successes
             div.alert.alert-success #{ success }

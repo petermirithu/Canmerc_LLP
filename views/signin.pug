@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    div.loginpage
+        div.login            
+            div.container
+                div.row
+                    div.col-md-3
+                    div.col-md-6
+                            h1 Sign In                
+                            form(method='POST', style="border:2px solid gray;padding:10px" action='/users/login')      
+                                #form-group
+                                    label Username:
+                                    input.form-control(name='username',type='text')        
+
+                                #form-group
+                                    label Password:
+                                    input.form-control(name='password',type='password')            
+                                br
+                                input.btn.btn-primary(type='submit',value='Submit')
+
+                            <br>
+                            p If you dont have an account <a href="/auth/signup">Sign Up</a>        
+                    div.col-md-3

@@ -2,7 +2,7 @@
   "development": {
     "username": "pyra",
     "password": "lotus",
-    "database": "todoapp",
+    "database": "canmercllp",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "operatorsAliases": false

@@ -10,9 +10,11 @@ var session = require('cookie-session');
 var db = require('./models/index');
 var http    = require('http')
 
+const passport = require('passport');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var todo_stuff = require("./routes/todo");
+var auth = require("./routes/auth");
 
 var app = express();
 
@@ -26,7 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(expressValidator());
 app.use(session({ cookie: { maxAge: 60000 }, 
     secret: 'wosdwswdwdwdwqdwqddqwdwdqdqwot',
     resave: false, 
@@ -41,7 +43,14 @@ app.use((req, res, next) => {
 
 app.use('/', routes);
 app.use('/user', users);
-app.use('/todo',todo_stuff);
+app.use('/auth',auth);
+
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+// passport config
+require('./config/passport')(passport);
+
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
@@ -79,6 +88,7 @@ app.set('port', process.env.PORT || 3000);
 db.sequelize.sync().then(function() {
     http.createServer(app).listen(app.get('port'), function(){
       console.log('Express server listening on port ' + app.get('port'));
+      console.log('http://localhost:3000/')
     });
 });
 
